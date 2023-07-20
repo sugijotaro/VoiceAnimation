@@ -8,19 +8,18 @@ public class VideoManager : MonoBehaviour
     public VideoPlayer videoPlayer;
     public string loadSceneName;
 
-    private bool videoPlayed = false;
-
-    private void Update()
+    void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !videoPlayed)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             videoPlayer.Play();
-            videoPlayed = true;
-        }
 
-        if (videoPlayed && !videoPlayer.isPlaying)
-        {
-            SceneManager.LoadScene(loadSceneName);
+            videoPlayer.loopPointReached += OnVideoEnd;
         }
+    }
+
+    void OnVideoEnd(VideoPlayer vp)
+    {
+        SceneManager.LoadScene(loadSceneName);
     }
 }
